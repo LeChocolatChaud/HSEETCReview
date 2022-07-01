@@ -1,0 +1,4 @@
+div#main-container {
+    display: flex;
+    align-items: center;
+}
