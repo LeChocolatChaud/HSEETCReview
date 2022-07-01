@@ -68,7 +68,7 @@ function isSpecialChararcter(character) {
         character === "$" ||
         character === "%";
 }
-var exhr = new EnhancedXMLHttpRequest(window.location.origin + "/assets/questions.txt", "GET", null);
+var exhr = new EnhancedXMLHttpRequest(window.location.origin.indexOf("github") > 0 ? "https://raw.githubusercontent.com/LeChocolatChaud/HSEETCReview/main/assets/questions.txt" : window.location.origin + "/assets/questions.txt", "GET", null);
 exhr.send();
 exhr.getResponse().then((response) => {
     let rresponse = response.replace(/ /g, "");
