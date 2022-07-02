@@ -100,8 +100,8 @@ function isSpecialChararcter(character) {
         character === "%");
 }
 var exhr = new EnhancedXMLHttpRequest(window.location.origin.indexOf("github") > 0
-    ? window.location.href + "/assets/questions.txt"
-    : window.location.origin + "/assets/questions.txt", "GET");
+    ? window.location.href + "/assets/questions.qst"
+    : window.location.origin + "/assets/questions.qst", "GET");
 exhr.send();
 exhr.getResponse().then((response) => {
     let rresponse = response.replace(/ /g, "");
