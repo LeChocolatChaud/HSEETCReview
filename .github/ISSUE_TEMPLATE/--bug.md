@@ -3,7 +3,7 @@ name: 发现bug
 about: 在这里与我们分享你发现的bug！
 title: "[BUG] 发现bug"
 labels: bug
-assignees: LeChocolatChaud
+assignees: ''
 
 ---
 
