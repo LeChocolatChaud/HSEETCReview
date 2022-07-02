@@ -78,7 +78,7 @@ function isSpecialChararcter(character: string): boolean {
 }
 
 var exhr = new EnhancedXMLHttpRequest(
-    window.location.origin.indexOf("github") > 0 ? "https://raw.githubusercontent.com/LeChocolatChaud/HSEETCReview/main/assets/questions.txt" : window.location.origin + "/assets/questions.txt",
+    window.location.origin.indexOf("github") > 0 ? window.location.href + "/assets/questions.txt" : window.location.origin + "/assets/questions.txt",
     "GET",
     null
 );
