@@ -159,21 +159,22 @@ exhr.getResponse().then((response) => {
             console.log(`Error parsing line ${i + 1}`);
         }
     }
+    onReset();
+}, (error) => {
+    console.error(error);
+    mainContainer.innerHTML = "Error while loading questions.";
+});
+function onReset() {
+    mainContainer.innerHTML = "";
     let questionsCopy = questions.slice();
     for (let i = 0; i < questionCount; i++) {
         let index = Math.floor(Math.random() * questionsCopy.length);
         mainContainer.appendChild(questions[index].toHTMLDivElement());
         questionsCopy.splice(index, 1);
     }
-}, (error) => {
-    console.error(error);
-    mainContainer.innerHTML = "Error while loading questions.";
-});
+}
 function onSubmit() {
-    for (let i = 0; i < mistakesContainer.childElementCount; i++) {
-        if (mistakesContainer.lastChild)
-            mistakesContainer.removeChild(mistakesContainer.lastChild);
-    }
+    mistakesContainer.innerHTML = "";
     for (let input of document.getElementsByTagName("input")) {
         if (input.type === "text") {
             if (input.value === Question.answers.get(input.id)) {
