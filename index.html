@@ -15,13 +15,13 @@
     </head>
     <body>
         <div><p>刷新页面以重置！</p></div>
-        <div>
+        <div><p>
             <label for="question-count-input">题目数量</label
             ><input
                 id="question-count-input"
                 onchange="questionCount = Number.parseInt(this.value);"
                 value="10"
-            />
+            /></p>
         </div>
         <div id="main-container"></div>
         <p><button onclick="onSubmit()">提交</button></p>
