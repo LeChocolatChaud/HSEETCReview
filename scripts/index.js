@@ -159,8 +159,11 @@ exhr.getResponse().then((response) => {
             console.log(`Error parsing line ${i + 1}`);
         }
     }
+    let questionsCopy = questions.slice();
     for (let i = 0; i < questionCount; i++) {
-        mainContainer.appendChild(questions[Math.floor(Math.random() * questions.length)].toHTMLDivElement());
+        let index = Math.floor(Math.random() * questionsCopy.length);
+        mainContainer.appendChild(questions[index].toHTMLDivElement());
+        questionsCopy.splice(index, 1);
     }
 }, (error) => {
     console.error(error);
