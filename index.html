@@ -15,13 +15,25 @@
     </head>
     <body>
         <div><button onclick="onReset()">重置</button></div>
-        <div><p>
-            <label for="question-count-input">题目数量</label
-            ><input
-                id="question-count-input"
-                onchange="questionCount = Number.parseInt(this.value);"
-                value="10"
-            /></p>
+        <div>
+            <p>
+                <label for="question-count-input">题目数量</label>
+                <input
+                    id="question-count-input"
+                    onchange="questionCount = Number.parseInt(this.value);"
+                    value="10"
+                />
+                <label for="question-difficulty-input">题目难度</label>
+                <input
+                    id="question-difficulty-input"
+                    onchange="changeDifficulty(this.valueAsNumber)"
+                    value="1"
+                    type="range"
+                    min="0"
+                    max="2"
+                />
+                <label id="question-difficulty-label-2" for="question-difficulty-input"></label>
+            </p>
         </div>
         <div id="main-container"></div>
         <p><button onclick="onSubmit()">提交</button></p>

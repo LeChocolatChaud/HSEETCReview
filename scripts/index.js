@@ -14,7 +14,21 @@ class Question {
         try {
             for (let part of this.parts) {
                 if (part.startsWith("$")) {
-                    if (Math.random() > 0.5) {
+                    let n;
+                    switch (questionDifficulty) {
+                        case 0:
+                            n = 1;
+                            break;
+                        case 1:
+                            n = Math.random();
+                            break;
+                        case 2:
+                            n = 0;
+                            break;
+                        default:
+                            throw new Error("Invalid question difficulty");
+                    }
+                    if (n > 0.5) {
                         let ppart = part;
                         if (part.indexOf("%") > 0) {
                             ppart =
@@ -73,7 +87,9 @@ class ReferenceQuestion extends KeywordedQuestion {
 const questions = new Array();
 const mainContainer = document.getElementById("main-container"); // main container
 const mistakesContainer = document.getElementById("mistakes-container"); // mistakes container
+const difficultyLabel = document.getElementById("question-difficulty-label-2"); // difficulty label
 var questionCount = 10;
+var questionDifficulty = 1;
 function isSpecialChararcter(character) {
     return (character === "[" ||
         character === "]" ||
@@ -190,5 +206,21 @@ function onSubmit() {
                 mistakesContainer.appendChild(mistakeDiv);
             }
         }
+    }
+}
+function changeDifficulty(difficulty) {
+    switch (difficulty) {
+        case 0:
+            questionDifficulty = 0;
+            difficultyLabel.innerHTML = "无空格，纯文字";
+            break;
+        case 1:
+            questionDifficulty = 1;
+            difficultyLabel.innerHTML = "50%几率空格";
+            break;
+        case 2:
+            questionDifficulty = 2;
+            difficultyLabel.innerHTML = "全空格";
+            break;
     }
 }
