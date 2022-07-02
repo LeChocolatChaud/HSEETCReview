@@ -3,6 +3,9 @@ class Question {
     constructor(...parts) {
         this._parts = parts;
     }
+    static get answers() {
+        return this._answers;
+    }
     get parts() {
         return this._parts;
     }
@@ -14,7 +17,9 @@ class Question {
                     if (Math.random() > 0.5) {
                         let ppart = part;
                         if (part.indexOf("%") > 0) {
-                            ppart = part.substring(0, part.indexOf("%")) + part.substring(part.lastIndexOf("%") + 1);
+                            ppart =
+                                part.substring(0, part.indexOf("%")) +
+                                    part.substring(part.lastIndexOf("%") + 1);
                         }
                         element.appendChild(document.createTextNode(part.substring(1, ppart.length - 1)));
                     }
@@ -24,6 +29,12 @@ class Question {
                         if (part.indexOf("%") > 0) {
                             input.placeholder = part.substring(part.indexOf("%") + 1, part.lastIndexOf("%"));
                         }
+                        input.id =
+                            "answer-input-" + Question._answers.size;
+                        Question._answers.set(input.id, part.indexOf("%") > 0
+                            ? part.substring(1, part.indexOf("%")) +
+                                part.substring(part.lastIndexOf("%") + 1, part.length - 1)
+                            : part.substring(1, part.length - 1));
                         element.appendChild(input);
                     }
                 }
@@ -39,6 +50,7 @@ class Question {
         return element;
     }
 }
+Question._answers = new Map();
 class KeywordedQuestion extends Question {
     constructor(keyword, ...parts) {
         super(...parts);
@@ -59,16 +71,19 @@ class ReferenceQuestion extends KeywordedQuestion {
 }
 const questions = new Array();
 const mainContainer = document.getElementById("main-container"); // main container
+const mistakesContainer = document.getElementById("mistakes-container"); // mistakes container
 function isSpecialChararcter(character) {
-    return character === "[" ||
+    return (character === "[" ||
         character === "]" ||
         character === "{" ||
         character === "}" ||
         character === "|" ||
         character === "$" ||
-        character === "%";
+        character === "%");
 }
-var exhr = new EnhancedXMLHttpRequest(window.location.origin.indexOf("github") > 0 ? window.location.href + "/assets/questions.txt" : window.location.origin + "/assets/questions.txt", "GET");
+var exhr = new EnhancedXMLHttpRequest(window.location.origin.indexOf("github") > 0
+    ? window.location.href + "/assets/questions.txt"
+    : window.location.origin + "/assets/questions.txt", "GET");
 exhr.send();
 exhr.getResponse().then((response) => {
     let rresponse = response.replace(/ /g, "");
@@ -120,7 +135,8 @@ exhr.getResponse().then((response) => {
                         break;
                     default:
                         partBuffer += line[j];
-                        if (j === line.length - 1 || isSpecialChararcter(line[j + 1])) {
+                        if (j === line.length - 1 ||
+                            isSpecialChararcter(line[j + 1])) {
                             parts.push(partBuffer);
                             partBuffer = "";
                         }
@@ -149,3 +165,18 @@ exhr.getResponse().then((response) => {
     console.error(error);
     mainContainer.innerHTML = "Error while loading questions.";
 });
+function onSubmit() {
+    for (let input of document.getElementsByTagName("input")) {
+        if (input.type === "text") {
+            if (input.value === Question.answers.get(input.id)) {
+                input.style.color = "green";
+            }
+            else {
+                input.style.color = "red";
+                let mistakeDiv = document.createElement("div");
+                mistakeDiv.innerHTML = `<p>第${input.id.replace(/\D/g, "")}空错误，你的答案：${input.value}，正确答案：${Question.answers.get(input.id)}</p>`;
+                mistakesContainer.appendChild(mistakeDiv);
+            }
+        }
+    }
+}
