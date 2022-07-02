@@ -26,6 +26,7 @@ class Question {
                     else {
                         let input = document.createElement("input");
                         input.type = "text";
+                        input.style.color = "black";
                         if (part.indexOf("%") > 0) {
                             input.placeholder = part.substring(part.indexOf("%") + 1, part.lastIndexOf("%"));
                         }
