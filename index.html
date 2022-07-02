@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/index.css">
-    <script type="text/javascript" src="scripts/EnhancedXHR.js"></script>
-    <script type="text/javascript" src="scripts/index.js" defer="defer"></script>
-    <title>中考文言文复习</title>
-</head>
-<body>
-    <div><p>刷新页面以重置！</p></div>
-    <div id="main-container"></div>
-    <p><button onclick="onSubmit()">提交</button></p>
-    <div id="mistakes-container"></div>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="assets/index.css" />
+        <script type="text/javascript" src="scripts/EnhancedXHR.js"></script>
+        <script
+            type="text/javascript"
+            src="scripts/index.js"
+            defer="defer"
+        ></script>
+        <title>中考文言文复习</title>
+    </head>
+    <body>
+        <div><p>刷新页面以重置！</p></div>
+        <div>
+            <label for="question-count-input">题目数量</label
+            ><input
+                id="question-count-input"
+                onchange="questionCount = Number.parseInt(this.value);"
+                value="10"
+            />
+        </div>
+        <div id="main-container"></div>
+        <p><button onclick="onSubmit()">提交</button></p>
+        <div id="mistakes-container"></div>
+    </body>
 </html>

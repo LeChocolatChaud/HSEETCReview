@@ -72,6 +72,7 @@ class ReferenceQuestion extends KeywordedQuestion {
 const questions = new Array();
 const mainContainer = document.getElementById("main-container"); // main container
 const mistakesContainer = document.getElementById("mistakes-container"); // mistakes container
+var questionCount = 10;
 function isSpecialChararcter(character) {
     return (character === "[" ||
         character === "]" ||
@@ -158,8 +159,8 @@ exhr.getResponse().then((response) => {
             console.log(`Error parsing line ${i + 1}`);
         }
     }
-    for (let question of questions) {
-        mainContainer.appendChild(question.toHTMLDivElement());
+    for (let i = 0; i < questionCount; i++) {
+        mainContainer.appendChild(questions[Math.floor(Math.random() * questions.length)].toHTMLDivElement());
     }
 }, (error) => {
     console.error(error);
