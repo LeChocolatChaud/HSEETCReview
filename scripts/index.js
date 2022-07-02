@@ -29,8 +29,7 @@ class Question {
                         if (part.indexOf("%") > 0) {
                             input.placeholder = part.substring(part.indexOf("%") + 1, part.lastIndexOf("%"));
                         }
-                        input.id =
-                            "answer-input-" + Question._answers.size;
+                        input.id = "answer-input-" + Question._answers.size;
                         Question._answers.set(input.id, part.indexOf("%") > 0
                             ? part.substring(1, part.indexOf("%")) +
                                 part.substring(part.lastIndexOf("%") + 1, part.length - 1)
@@ -166,6 +165,10 @@ exhr.getResponse().then((response) => {
     mainContainer.innerHTML = "Error while loading questions.";
 });
 function onSubmit() {
+    for (let i = 0; i < mistakesContainer.childElementCount; i++) {
+        if (mistakesContainer.lastChild)
+            mistakesContainer.removeChild(mistakesContainer.lastChild);
+    }
     for (let input of document.getElementsByTagName("input")) {
         if (input.type === "text") {
             if (input.value === Question.answers.get(input.id)) {
