@@ -1,2 +1,3 @@
 scripts/*.ts
 .vscode/
+.DS_Store
