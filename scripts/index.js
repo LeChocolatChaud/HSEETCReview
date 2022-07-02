@@ -168,6 +168,7 @@ exhr.getResponse().then((response) => {
 function onReset() {
     mainContainer.innerHTML = "";
     Question.answers.clear();
+    mistakesContainer.innerHTML = "";
     let questionsCopy = questions.slice();
     for (let i = 0; i < questionCount; i++) {
         let index = Math.floor(Math.random() * questionsCopy.length);
