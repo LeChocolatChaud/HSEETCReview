@@ -8,18 +8,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+/**
+ * An easier way to use XMLHttpRequest
+ */
 class EnhancedXMLHttpRequest {
-    constructor(url, method, data) {
+    /**
+     * @param url The url of the resource to request.
+     * @param method The method to use for the request.
+     * @param headers The headers to use for the request (optional).
+     * @param data The data to send with the request.
+     */
+    constructor(url, method, headers, data) {
         this.url = url;
         this.method = method;
-        this.data = data;
+        this.data = data ? data : null;
+        this.headers = headers ? headers : null;
         this.xhr = new XMLHttpRequest();
     }
+    /**
+     * Sends the request.
+     */
     send() {
         this.xhr.open(this.method, this.url, true);
-        this.xhr.setRequestHeader("Content-Type", "application/json");
+        if (this.headers) {
+            for (var key in this.headers) {
+                this.xhr.setRequestHeader(key, this.headers[key]);
+            }
+        }
         this.xhr.send(JSON.stringify(this.data));
     }
+    /**
+     * Gets the response.
+     *
+     * @returns A promise that resolves to the response.
+     * @throws An error if the request failed or not successful.
+     */
     getResponse(abortSignal) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {

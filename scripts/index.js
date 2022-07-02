@@ -68,7 +68,7 @@ function isSpecialChararcter(character) {
         character === "$" ||
         character === "%";
 }
-var exhr = new EnhancedXMLHttpRequest(window.location.origin.indexOf("github") > 0 ? window.location.href + "/assets/questions.txt" : window.location.origin + "/assets/questions.txt", "GET", null);
+var exhr = new EnhancedXMLHttpRequest(window.location.origin.indexOf("github") > 0 ? window.location.href + "/assets/questions.txt" : window.location.origin + "/assets/questions.txt", "GET");
 exhr.send();
 exhr.getResponse().then((response) => {
     let rresponse = response.replace(/ /g, "");
@@ -145,4 +145,7 @@ exhr.getResponse().then((response) => {
     for (let question of questions) {
         mainContainer.appendChild(question.toHTMLDivElement());
     }
+}, (error) => {
+    console.error(error);
+    mainContainer.innerHTML = "Error while loading questions.";
 });
