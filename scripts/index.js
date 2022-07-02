@@ -41,6 +41,7 @@ class Question {
                     element.appendChild(document.createTextNode(part));
                 }
             }
+            element.appendChild(document.createTextNode("。"));
         }
         catch (e) {
             console.error(e);
