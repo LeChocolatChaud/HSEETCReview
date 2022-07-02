@@ -177,7 +177,7 @@ function onReset() {
 function onSubmit() {
     mistakesContainer.innerHTML = "";
     for (let input of document.getElementsByTagName("input")) {
-        if (input.type === "text") {
+        if (input.id.startsWith("answer-")) {
             if (input.value === Question.answers.get(input.id)) {
                 input.style.color = "green";
             }
