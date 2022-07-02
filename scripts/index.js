@@ -188,7 +188,7 @@ function onReset() {
     let questionsCopy = questions.slice();
     for (let i = 0; i < questionCount; i++) {
         let index = Math.floor(Math.random() * questionsCopy.length);
-        mainContainer.appendChild(questions[index].toHTMLDivElement());
+        mainContainer.appendChild(questionsCopy[index].toHTMLDivElement());
         questionsCopy.splice(index, 1);
     }
 }
