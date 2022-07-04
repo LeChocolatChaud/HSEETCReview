@@ -10,7 +10,11 @@ class Question {
         return this._parts;
     }
     toHTMLDivElement() {
-        let element = document.createElement("div");
+        let divElement = document.createElement("div");
+        let pElement = document.createElement("p");
+        let bElement = document.createElement("b");
+        bElement.innerHTML = "&nbsp;·&nbsp;";
+        pElement.appendChild(bElement);
         try {
             for (let part of this.parts) {
                 if (part.startsWith("$")) {
@@ -35,34 +39,45 @@ class Question {
                                 part.substring(0, part.indexOf("%")) +
                                     part.substring(part.lastIndexOf("%") + 1);
                         }
-                        element.appendChild(document.createTextNode(part.substring(1, ppart.length - 1)));
+                        pElement.appendChild(document.createTextNode(part.substring(1, ppart.length - 1)));
                     }
                     else {
                         let input = document.createElement("input");
                         input.type = "text";
                         input.style.color = "black";
+                        input.style.backgroundColor = "#efdec8";
+                        input.style.margin = "2px";
+                        input.style.textAlign = "center";
+                        let placeholder;
                         if (part.indexOf("%") > 0) {
                             input.placeholder = part.substring(part.indexOf("%") + 1, part.lastIndexOf("%"));
+                            placeholder = input.placeholder;
                         }
                         input.id = "answer-input-" + Question._answers.size;
-                        Question._answers.set(input.id, part.indexOf("%") > 0
+                        let answer = part.indexOf("%") > 0
                             ? part.substring(1, part.indexOf("%")) +
                                 part.substring(part.lastIndexOf("%") + 1, part.length - 1)
-                            : part.substring(1, part.length - 1));
-                        element.appendChild(input);
+                            : part.substring(1, part.length - 1);
+                        input.style.width =
+                            placeholder && placeholder.length > answer.length
+                                ? placeholder.length * 16 + "px"
+                                : answer.length * 16 + "px";
+                        Question._answers.set(input.id, answer);
+                        pElement.appendChild(input);
                     }
                 }
                 else {
-                    element.appendChild(document.createTextNode(part));
+                    pElement.appendChild(document.createTextNode(part));
                 }
             }
-            element.appendChild(document.createTextNode("。"));
+            pElement.appendChild(document.createTextNode("。"));
         }
         catch (e) {
             console.error(e);
-            element.innerHTML = "Error while creating question.";
+            pElement.innerHTML = "Error while creating question.";
         }
-        return element;
+        divElement.appendChild(pElement);
+        return divElement;
     }
 }
 Question._answers = new Map();
@@ -194,18 +209,28 @@ function onReset() {
 }
 function onSubmit() {
     mistakesContainer.innerHTML = "";
+    let mistakes = new Array();
     for (let input of document.getElementsByTagName("input")) {
         if (input.id.startsWith("answer-")) {
+            if (input.value == "") {
+                alert("你还未完成所有题目！不会的题目请输入任意字符！");
+                return;
+            }
             if (input.value === Question.answers.get(input.id)) {
                 input.style.color = "green";
+                input.style.backgroundColor = "#87ff9b67";
             }
             else {
                 input.style.color = "red";
+                input.style.backgroundColor = "#ff878767";
                 let mistakeDiv = document.createElement("div");
                 mistakeDiv.innerHTML = `<p>第${input.id.replace(/\D/g, "")}空错误，你的答案：${input.value}，正确答案：${Question.answers.get(input.id)}</p>`;
-                mistakesContainer.appendChild(mistakeDiv);
+                mistakes.push(mistakeDiv);
             }
         }
+    }
+    for (let mistake of mistakes) {
+        mistakesContainer.appendChild(mistake);
     }
 }
 function changeDifficulty(difficulty) {

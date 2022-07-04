@@ -14,15 +14,22 @@
         <title>中考文言文复习</title>
     </head>
     <body>
-        <div><button onclick="onReset()">重置</button></div>
-        <div>
-            <p>
+        <div id="source-code-div">
+            <a href="https://github.com/LeChocolatChaud/HSEETCReview">源代码</a>
+        </div>
+        <p class="button-p"><button onclick="onReset()">重置</button></p>
+        <div id="settings-div">
+            <span></span>
+            <div id="setting-a">
                 <label for="question-count-input">题目数量</label>
                 <input
                     id="question-count-input"
                     onchange="questionCount = Number.parseInt(this.value);"
                     value="10"
                 />
+            </div>
+            <span></span>
+            <div id="setting-b">
                 <label for="question-difficulty-input">题目难度</label>
                 <input
                     id="question-difficulty-input"
@@ -38,10 +45,12 @@
                 >
                     50%几率空格
                 </label>
-            </p>
+            </div>
         </div>
         <div id="main-container"></div>
-        <p><button onclick="onSubmit()">提交</button></p>
+        <p class="button-p">
+            <button onclick="onSubmit()" id="submit">提交</button>
+        </p>
         <div id="mistakes-container"></div>
     </body>
 </html>
