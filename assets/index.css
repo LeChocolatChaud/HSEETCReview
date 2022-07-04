@@ -8,15 +8,46 @@ body {
     background-color: #efdec8;
 }
 
-div#source-code-div{
+div#github-div {
     position: absolute;
     top: 10px;
     left: 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+}
+
+div#source-code-div {
     padding: 10px;
     border: 0px;
     background-color: #435bbb;
     border-radius: 10px;
     color: #fff;
+}
+
+div#last-commit-div {
+    margin-left: 5px;
+    padding: 10px;
+    border: 0px;
+    background-color: #603d3d;
+    border-radius: 10px;
+    color: #fff;
+    width: fit-content;
+}
+
+div#commit-container {
+    display: none;
+    margin-left: 5px;
+    margin-top: 5px;
+    padding: 10px;
+    border: 0px;
+    background-color: #72727269;
+    border-radius: 10px;
+    color: #fff;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
 
 div#main-container {
@@ -40,7 +71,7 @@ p {
 }
 
 p.button-p {
-    margin: 30px
+    margin: 30px;
 }
 
 button {

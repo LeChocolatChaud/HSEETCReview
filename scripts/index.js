@@ -103,6 +103,7 @@ const questions = new Array();
 const mainContainer = document.getElementById("main-container"); // main container
 const mistakesContainer = document.getElementById("mistakes-container"); // mistakes container
 const difficultyLabel = document.getElementById("question-difficulty-label-2"); // difficulty label
+const commitContainer = document.getElementById("commit-container"); // commit container
 var questionCount = 10;
 var questionDifficulty = 1;
 function isSpecialChararcter(character) {
@@ -247,5 +248,29 @@ function changeDifficulty(difficulty) {
             questionDifficulty = 2;
             difficultyLabel.innerHTML = "全空格";
             break;
+    }
+}
+var exhr2 = new EnhancedXMLHttpRequest("https://api.github.com/repos/LeChocolatChaud/HSEETCReview/commits/main", "GET", {
+    accept: "application/vnd.github.v3+json",
+});
+exhr2.send();
+exhr2.getResponse().then((response) => {
+    let root = JSON.parse(response);
+    let commit = root.commit;
+    let committer = commit.committer;
+    let date = new Date(committer.date);
+    let dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    let timeString = `${date.getHours()}:${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`;
+    let commitString = `更新时间：${dateString} ${timeString} <br> 更新信息：${commit.message} <br> 更新人：${committer.name} ${committer.email}`;
+    commitContainer.innerHTML = commitString;
+}, (error) => {
+    console.error(error);
+});
+function switchCommitContainerVisibility() {
+    if (commitContainer.style.display === "none") {
+        commitContainer.style.display = "block";
+    }
+    else {
+        commitContainer.style.display = "none";
     }
 }
